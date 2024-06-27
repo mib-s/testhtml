@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced DMX Fader Console</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .console {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .fader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+        }
+        .fader {
+            width: 60px;
+            height: 200px;
+            background-color: #444;
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .knob {
+            width: 70px;
+            height: 20px;
+            background-color: #888;
+            position: absolute;
+            bottom: 0;
+            left: -5px;
+            border-radius: 10px;
+            cursor: grab;
+        }
+        .knob:active {
+            cursor: grabbing;
+        }
+        .knob::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+        .max-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #f00;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .fader-value {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .fader-index {
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            align-items: center;
+        }
+        .controls button, .controls input, .controls select {
+            padding: 5px 10px;
+            background-color: #555;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .controls input[type="number"] {
+            width: 50px;
+        }
+        .controls label {
+            margin-right: 5px;
+        }
+        #groupChannels {
+            width: 200px;
+        }
+        .sixteen-bit {
+            background-color: #008080;
+        }
+        .fader-type {
+            font-size: 12px;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+        .color-mixer {
+            width: 60px;
+            height: 30px;
+            margin-top: 10px;
+            border: 1px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="console" id="faderConsole"></div>
+    <div class="controls">
+        <button id="scrollLeft">← Left</button>
+        <button id="scrollRight">Right →</button>
+        <label for="faderCount">Faders:</label>
+        <input type="number" id="faderCount" min="1" max="512" value="8">
+        <label for="effectToggle">Effect:</label>
+        <select id="effectToggle">
+            <option value="off">Off</option>
+            <option value="sine">Sine</option>
+            <option value="linear">Linear</option>
+            <option value="zigzag">Zigzag</option>
+        </select>
+        <label for="effectBPM">BPM:</label>
+        <input type="number" id="effectBPM" min="1" max="300" value="120">
+        <label for="effectIntensity">Intensity:</label>
+        <input type="number" id="effectIntensity" min="1" max="100" value="50">
+        <label for="effectMin">Min:</label>
+        <input type="number" id="effectMin" min="0" max="255" value="0">
+        <label for="effectMax">Max:</label>
+        <input type="number" id="effectMax" min="0" max="255" value="255">
+        <label for="groupChannels">Group Channels (comma-separated):</label>
+        <input type="text" id="groupChannels" placeholder="e.g., 1,2,3,10-15">
+        <button id="updateGroup">Update Group</button>
+    </div>
+
+    <script src="dmx_console.js"></script>
+</body>
+</html>
